@@ -49,7 +49,7 @@ resource "aws_amplify_app" "this" {
     }
     
     custom_rule {
-        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
+        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json|pdf)$)([^.]+$)/>"
         status = "200"
         target = "/index.html"
     }
