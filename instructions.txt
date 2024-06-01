@@ -1,0 +1,10 @@
+
+
+KEY = /Users/ctb/RIT/cloud_systems/PairOneV.pem
+FROM = /Users/ctb/Programming/tondreau-tech/terraform
+EC2 = ec2-34-235-138-211.compute-1.amazonaws.com
+
+COMMAND = scp -i {KEY_PATH} -r {FROM} ec2-user@{EC2}:terraform
+
+scp -i /Users/ctb/RIT/cloud_systems/PairOneV.pem -r /Users/ctb/Programming/tondreau-tech/terraform ec2-user@ec2-34-235-138-211.compute-1.amazonaws.com:terraform
+scp -i /Users/ctb/RIT/cloud_systems/PairOneV.pem /Users/ctb/Programming/tondreau-tech/terraform/* ec2-user@ec2-34-235-138-211.compute-1.amazonaws.com:terraform

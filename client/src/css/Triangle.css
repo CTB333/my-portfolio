@@ -1,0 +1,7 @@
+.svg-triangle path {
+  /* position: relative; */
+  /* overflow: hidden; */
+  stroke-width: 20;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}

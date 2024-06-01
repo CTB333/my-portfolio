@@ -1,0 +1,47 @@
+:root {
+  --primary: #ffffff;
+  --secondary: #000000;
+  --accent: #944bbb;
+
+  --gray: #3f3f3f;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.bg-green {
+  background-color: green;
+}
+.bg-orange {
+  background-color: orange;
+}
+.bg-red {
+  background-color: orangered;
+}
+.bg-blue {
+  background-color: blue;
+}
+.bg-aqua {
+  background-color: aqua;
+}
+
+.color-primary {
+  color: var(--primary);
+}
+.color-secondary {
+  color: var(--secondary);
+}
+.color-accent {
+  color: var(--accent);
+}

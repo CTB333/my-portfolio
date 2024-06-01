@@ -1,0 +1,69 @@
+.fs-1 {
+  font-size: 4.5rem;
+}
+
+.fs-2 {
+  font-size: 2rem;
+}
+
+.fs-3 {
+  font-size: 1.35rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.hover-bold:hover {
+  font-weight: bold;
+}
+
+.dark {
+  font-weight: bolder;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: start;
+}
+.text-right {
+  text-align: end;
+}
+
+.rit-text {
+  color: orange;
+  text-shadow: 4px 4px 0px var(--secondary), 4px -4px 0px var(--secondary),
+    -4px 4px 0px var(--secondary), -4px -4px 0px var(--secondary),
+    4px 0px 0px var(--secondary), 0px 4px 0px var(--secondary),
+    -4px 0px 0px var(--secondary), 0px -4px 0px var(--secondary);
+}
+
+@media (width <= 700px) {
+  .fs-1 {
+    font-size: 2.5rem;
+  }
+
+  .fs-2 {
+    font-size: 1.75rem;
+  }
+
+  .fs-3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (width >700px) and (width <= 1000px) {
+  .fs-1 {
+    font-size: 3rem;
+  }
+
+  .fs-2 {
+    font-size: 2rem;
+  }
+
+  .fs-3 {
+    font-size: 1.35rem;
+  }
+}
