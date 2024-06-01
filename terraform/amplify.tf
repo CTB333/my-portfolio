@@ -45,7 +45,7 @@ resource "aws_amplify_app" "this" {
         REACT_APP_CAPTCHA="6LeRZ-YpAAAAAO9k5OSackA6EZBzf7va1antq8oY"
         REACT_APP_EMAIL_SERVICE="service_emrytxi"
         REACT_APP_EMAIL_TEMPLATE="template_r0oy6bh"
-        REACT_APP_EMAIL_USER="TAVojM5HGqjBTIrl5"
+        REACT_APP_EMAIL_KEY="GzqxzqZRc5_oF4cCw"
     }
     
     custom_rule {

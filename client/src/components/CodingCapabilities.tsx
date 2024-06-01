@@ -11,11 +11,11 @@ import { useScreenSize } from "../providers";
 export const CodingCapabilities = () => {
   const navigate = useNavigate();
   const bars: ProgressBarProps[] = [
-    { title: "Typescript", src: IMAGES.IconTs },
-    { title: "Python", src: IMAGES.IconPython },
-    { title: "Java", src: IMAGES.IconJava },
-    { title: "React", src: IMAGES.IconReact },
-    { title: "Node.js", src: IMAGES.IconNode },
+    { title: "Typescript", src: IMAGES.IconTs, filled: 5 },
+    { title: "Python", src: IMAGES.IconPython, filled: 5 },
+    { title: "Java", src: IMAGES.IconJava, filled: 5 },
+    { title: "React", src: IMAGES.IconReact, filled: 5 },
+    { title: "Node.js", src: IMAGES.IconNode, filled: 5 },
   ];
   const toResume = () => navigate("/resume");
 

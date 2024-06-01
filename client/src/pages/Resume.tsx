@@ -18,30 +18,45 @@ import { useScreenSize } from "../providers";
 
 export const Resume = () => {
   const softSkills: ProgressBarProps[] = [
-    { title: "Teamwork", src: undefined, icon: undefined },
-    { title: "Communication", src: undefined, icon: undefined },
-    { title: "Math", src: undefined, icon: undefined },
-    { title: "Time Managment", src: undefined, icon: undefined },
+    { filled: 5, title: "Creativity", src: undefined, icon: undefined },
+    {
+      filled: 5,
+      title: "Software Architecture",
+      src: undefined,
+      icon: undefined,
+    },
+    { filled: 5, title: "Teamwork", src: undefined, icon: undefined },
+    { filled: 5, title: "Math", src: undefined, icon: undefined },
+    { filled: 4.5, title: "Communication", src: undefined, icon: undefined },
+    { filled: 4, title: "Time Managment", src: undefined, icon: undefined },
+    { filled: 4, title: "UI Design", src: undefined, icon: undefined },
+    { filled: 3.5, title: "Team Managment", src: undefined, icon: undefined },
   ];
-  const improving: ProgressBarProps[] = [
-    { title: "Team Managment", src: undefined, icon: undefined },
-  ];
+
   const coding: ProgressBarProps[] = [
-    { title: "HTML", src: IMAGES.IconHtml },
-    { title: "Javascript", src: IMAGES.IconJs },
-    { title: "Typescript", src: IMAGES.IconTs },
-    { title: "Angular", src: IMAGES.IconAngular },
-    { title: "React", src: IMAGES.IconReact },
-    { title: "React Native", src: IMAGES.IconReact },
-    { title: "Node.js", src: IMAGES.IconNode },
-    { title: "NPM", src: IMAGES.IconNpm },
-    { title: "Java", src: IMAGES.IconJava },
-    { title: "Spring Boot", src: IMAGES.IconJava },
-    { title: "Python", src: IMAGES.IconPython },
-    { title: "Flask", src: IMAGES.IconPython },
-    { title: "Terraform", src: IMAGES.IconTf },
-    { title: "SQL", src: IMAGES.IconSql },
-    { title: "VS Code", src: IMAGES.IconVs },
+    { filled: 5, title: "Typescript", src: IMAGES.IconTs },
+    { filled: 5, title: "Python", src: IMAGES.IconPython },
+    { filled: 5, title: "React", src: IMAGES.IconReact },
+    { filled: 5, title: "Node.js", src: IMAGES.IconNode },
+    { filled: 5, title: "React Native", src: IMAGES.IconReact },
+    { filled: 5, title: "MongoDB", src: IMAGES.IconMongo },
+    { filled: 5, title: "Figma", src: IMAGES.IconFigma },
+    { filled: 5, title: "Flask", src: IMAGES.IconPython },
+    { filled: 5, title: "HTML", src: IMAGES.IconHtml },
+    { filled: 5, title: "Javascript", src: IMAGES.IconJs },
+    { filled: 5, title: "CSS", src: IMAGES.IconCSS },
+    { filled: 5, title: "VS Code", src: IMAGES.IconVs },
+    { filled: 4.5, title: "Java", src: IMAGES.IconJava },
+    { filled: 4.5, title: "Stripe", src: IMAGES.IconStripe },
+    { filled: 4, title: "GitHub", src: IMAGES.IconGithub },
+    { filled: 4, title: "SQL", src: IMAGES.IconSql },
+    { filled: 4, title: "Terraform", src: IMAGES.IconTf },
+    { filled: 4, title: "Spring Boot", src: IMAGES.IconJava },
+    { filled: 3.5, title: "C", src: IMAGES.IconC },
+    { filled: 3.5, title: "C#", src: IMAGES.IconCSharp },
+    { filled: 3.5, title: "C++", src: IMAGES.IconCPlus },
+    { filled: 3.5, title: "Angular", src: IMAGES.IconAngular },
+    { filled: 3.5, title: "GitLab", src: IMAGES.IconGitlab },
   ];
 
   useScrollToTop();
@@ -109,8 +124,7 @@ export const Resume = () => {
         </div>
 
         <ProgressBars title="Soft Skills" bars={softSkills} />
-        <div className="pv-25"></div>
-        <ProgressBars title="Currently Improving" bars={improving} />
+
         <div className="pv-25"></div>
         <ProgressBars title="Coding Capabilities" bars={coding} />
 

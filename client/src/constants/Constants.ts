@@ -5,6 +5,6 @@ export const CONSTANTS = {
   emailJs: {
     serviceId: process.env.REACT_APP_EMAIL_SERVICE as string,
     templateId: process.env.REACT_APP_EMAIL_TEMPLATE as string,
-    userId: process.env.REACT_APP_EMAIL_USER as string,
+    publicKey: process.env.REACT_APP_EMAIL_KEY as string,
   },
 };

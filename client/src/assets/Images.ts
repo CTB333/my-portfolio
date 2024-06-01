@@ -37,6 +37,15 @@ import IconTf from "./images/Tf.png";
 import IconVs from "./images/Vs.png";
 import IconRIT from "./images/rit-logo.png";
 
+import IconC from "./images/c.png";
+import IconCSharp from "./images/c#.png";
+import IconCPlus from "./images/c++.png";
+import IconCSS from "./images/css.png";
+import IconGithub from "./images/github.png";
+import IconGitlab from "./images/gitlab.png";
+import IconMongo from "./images/mongodb.png";
+import IconStripe from "./images/stripe.png";
+
 import AboutImage1 from "./images/about_images/image1.jpg";
 import AboutImage2 from "./images/about_images/image2.jpg";
 import AboutImage3 from "./images/about_images/image3.jpg";
@@ -106,6 +115,14 @@ export const IMAGES = {
   IconTf,
   IconVs,
   IconRIT,
+  IconC,
+  IconCSharp,
+  IconCPlus,
+  IconCSS,
+  IconGithub,
+  IconGitlab,
+  IconMongo,
+  IconStripe,
 
   AboutImage1,
   AboutImage2,

@@ -10,6 +10,7 @@ import { stringify } from "../utils";
 
 const useContact = () => {
   const form = useRef<HTMLFormElement>(null);
+  const captchaRef = useRef<ReCAPTCHA>(null);
   const submitButton = useRef<HTMLInputElement>(null);
 
   useScrollToTop();
@@ -61,32 +62,36 @@ const useContact = () => {
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!form.current) return;
+    if (!form.current || !captchaRef.current) return;
 
     if (!validate()) return;
 
     console.log(`Sending Email`);
+    // console.log(captcha);
+
+    const template = {
+      user_name: name,
+      user_email: email,
+      user_message: msg,
+      "g-recaptcha-response": captcha,
+    };
 
     emailjs
       .send(
         CONSTANTS.emailJs.serviceId,
         CONSTANTS.emailJs.templateId,
-        {
-          ...form.current,
-          "g-recaptcha-response": captcha,
-        },
-        CONSTANTS.emailJs.userId
+        template,
+        CONSTANTS.emailJs.publicKey
       )
-      .then(
-        (result) => {
-          successMessage();
-          reset();
-        },
-        (error) => {
-          console.log(stringify(error));
-          errorMessage("Something went wrong, please try again later");
-        }
-      );
+      .then((result) => {
+        successMessage();
+        reset();
+      })
+      .catch((error) => {
+        console.log(`Email Error:`);
+        console.log(stringify(error));
+        errorMessage("Something went wrong, please try again later");
+      });
   };
 
   return {
@@ -100,6 +105,7 @@ const useContact = () => {
       setMsg,
       captcha,
       setCaptcha,
+      captchaRef,
     },
     submitButton,
     sendEmail,
@@ -108,8 +114,17 @@ const useContact = () => {
 
 export const Contact = () => {
   const { form, state, submitButton, sendEmail } = useContact();
-  const { name, setName, email, setEmail, msg, setMsg, captcha, setCaptcha } =
-    state;
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    msg,
+    setMsg,
+    captcha,
+    setCaptcha,
+    captchaRef,
+  } = state;
 
   const { ltMedSmall, ltSmall } = useScreenSize();
 
@@ -163,6 +178,7 @@ export const Contact = () => {
 
           <div className={`flex  ${ltSmall ? "column" : "ai-end space"}`}>
             <ReCAPTCHA
+              ref={captchaRef}
               sitekey={CONSTANTS.google.capatcha}
               onChange={setCaptcha}
             />

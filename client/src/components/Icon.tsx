@@ -35,6 +35,15 @@ const PackageIcons = {
       />
     </div>
   ),
+  github: (props: PackageIconProps) => (
+    <div style={{ width: props.size, height: props.size }}>
+      <img
+        alt="Ts"
+        className="width height img-contain bg-primary rad-50"
+        src={IMAGES.IconGithub}
+      />
+    </div>
+  ),
 };
 
 export type IconProps = Partial<PackageIconProps> & {

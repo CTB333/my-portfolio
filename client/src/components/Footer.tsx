@@ -20,7 +20,7 @@ const Link = ({ margin = true, text, onPress }: LinkProps) => {
         initial={{ fontWeight: "normal" }}
         whileHover={{ fontWeight: "bold" }}
         transition={{ duration: 0.5 }}
-        className={`color-primary ${margin ? "mb-25" : ""} ${
+        className={`color-primary ${margin ? "mb-50" : ""} ${
           ltSmall ? "text-center" : ""
         }`}
       >
@@ -51,6 +51,15 @@ export const Footer = () => {
     if (newWindow) newWindow.opener = null;
   };
 
+  const toGitHub = () => {
+    const newWindow = window.open(
+      "https://github.com/CTB333?tab=repositories",
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
+  };
+
   const { ltSmall, gtMedSmall } = useScreenSize();
 
   return (
@@ -64,7 +73,7 @@ export const Footer = () => {
       <div className={`flex ${ltSmall ? "column" : "row"} center`}>
         <div
           style={{ minWidth: "10%" }}
-          className={`flex column height ${ltSmall ? "" : "mr-50"}`}
+          className={`flex column height ${ltSmall ? "mb-50" : "mr-50"}`}
         >
           <Link onPress={() => navigate("/")} text="Home" />
           <Link onPress={() => navigate("/about")} text="About" />
@@ -83,6 +92,16 @@ export const Footer = () => {
           <ShrinkClick onPress={toInstagram}>
             <HoverGrow stayActive>
               <Icon size={2} name="insta" />
+            </HoverGrow>
+          </ShrinkClick>
+          {gtMedSmall ? (
+            <div className="mv-50"></div>
+          ) : (
+            <div className="mh-25" />
+          )}
+          <ShrinkClick onPress={toGitHub}>
+            <HoverGrow stayActive>
+              <Icon size={2} name="github" />
             </HoverGrow>
           </ShrinkClick>
           {gtMedSmall ? (
