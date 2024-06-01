@@ -1,14 +1,20 @@
+variable "aws_region" {
+  description = "AWS Region For All Resources."
+
+  type    = string
+  default = "us-east-1"
+}
 
 variable "token" {
   type        = string
   description = "github token to connect github repo"
-  default     = "" # "Your Gitub Token"
+  # default     = "" # "Your Gitub Token"
 }
 
 variable "repository" {
   type        = string
   description = "github repo url"
-  default     = "" # "YOUR SOURCE-CODE REPO URL"
+  default     = "https://github.com/CTB333/my-portfolio" # "YOUR SOURCE-CODE REPO URL"
 }
 
 variable "app_name" {
@@ -33,7 +39,7 @@ variable "branch_name" {
 variable "domain_name" {
   type        = string
   description = "AWS Amplify Domain Name"
-  default     = "WorkinOnIt"
+  default     = "WorkinOnIt.com"
 }
 
 variable "admin_policy" {

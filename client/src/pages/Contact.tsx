@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useScrollToTop } from "../hooks";
 import { useScreenSize } from "../providers";
+import { stringify } from "../utils";
 
 const useContact = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -82,7 +83,7 @@ const useContact = () => {
           reset();
         },
         (error) => {
-          console.log(error.text);
+          console.log(stringify(error));
           errorMessage("Something went wrong, please try again later");
         }
       );

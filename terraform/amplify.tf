@@ -42,7 +42,7 @@ resource "aws_amplify_app" "this" {
         AMPLIFY_DIFF_DEPLOY = false
         AMPLIFY_MONOREPO_APP_ROOT = var.app_root
 
-        REACT_APP_CAPTCHA="YpAAAAAO9k5OSackA6EZBzf7va1antq8oY"
+        REACT_APP_CAPTCHA="6LeRZ-YpAAAAAO9k5OSackA6EZBzf7va1antq8oY"
         REACT_APP_EMAIL_SERVICE="service_emrytxi"
         REACT_APP_EMAIL_TEMPLATE="template_r0oy6bh"
         REACT_APP_EMAIL_USER="TAVojM5HGqjBTIrl5"
@@ -68,15 +68,19 @@ resource "aws_amplify_branch" "this" {
     enable_auto_build = true
     framework = "React"
     stage     = "PRODUCTION"
+
+    depends_on = [ aws_amplify_app.this ]
 }
 
-resource "aws_amplify_domain_association" "this" {
-    app_id = aws_amplify_app.this.id
-    domain_name = var.domain_name
-    wait_for_verification = false
+# resource "aws_amplify_domain_association" "this" {
+#     app_id = aws_amplify_app.this.id
+#     domain_name = var.domain_name
+#     wait_for_verification = false
 
-    sub_domain {
-        branch_name = aws_amplify_branch.this.branch_name
-        prefix = var.branch_name
-    }
-}
+#     sub_domain {
+#         branch_name = aws_amplify_branch.this.branch_name
+#         prefix = var.branch_name
+#     }
+
+#     depends_on = [ aws_amplify_app.this ]
+# }
