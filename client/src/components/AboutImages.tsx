@@ -7,6 +7,7 @@ import { AnimationFunction, useRunAnimationOnce } from "../hooks";
 import { Easing, motion } from "framer-motion";
 import { useScreenSize } from "../providers";
 import { responsiveString } from "../utils";
+import { AboutImage } from "./AboutImage";
 
 const useAboutImages = (onFunctionalPress?: () => void) => {
   const LeftMost = ".left-left-images";
@@ -92,7 +93,9 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
 
   const mediumMult = 0.75;
   const medSmallMult = 0.6;
-  const smallMult = 0.3;
+  const smallMult = 0.35;
+
+  const margin = ltSmall ? 10 : 20;
 
   const hiddenSize = ltSmall
     ? 5.2 * smallMult
@@ -175,12 +178,12 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
     iPadAirHorizontal: "-15%",
     iPadProHorizontal: "-6%",
   });
-  const transformStyle =
-    responsiveTransform.length === 0
-      ? `translateX(${
-          ltSmall ? "-28%" : ltMedSmall ? "-20%" : ltMedium ? "-9%" : "-3%"
-        })`
-      : `translateX(${responsiveTransform})`;
+  // const transformStyle: string =
+  //   responsiveTransform.length === 0
+  //     ? `translateX(${
+  //         ltSmall ? "-28%" : ltMedSmall ? "-20%" : ltMedium ? "-9%" : "-3%"
+  //       })`
+  //     : `translateX(${responsiveTransform})`;
 
   return (
     <div ref={scope} className="relative pv-25">
@@ -188,9 +191,73 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
 
       <div
         style={{
-          transform: transformStyle,
+          width: "110vw",
+          top: 0,
+          left: "-3vw",
         }}
         className="absolute-fill"
+      >
+        <ShrinkClick
+          disabled={isAnimating}
+          stayActive
+          to={0.98}
+          duration={1}
+          clickable
+          onPress={onAnimatedPress}
+          className="width height flex center relative"
+        >
+          <motion.div className="flex column left-left-images z-1">
+            <AboutImage
+              base={leftMostBase}
+              length={leftMostLength}
+              src={images[0]}
+              className={`mb-${margin}`}
+            />
+            <AboutImage
+              base={leftMostBase}
+              length={leftMostLength}
+              src={images[1]}
+            />
+          </motion.div>
+
+          <motion.div className={`flex column mh-${margin} left-images z-1`}>
+            <AboutImage
+              base={leftBase}
+              length={leftLength}
+              src={images[2]}
+              className={`mb-${margin}`}
+            />
+            <AboutImage base={leftBase} length={leftBase} src={images[3]} />
+          </motion.div>
+
+          <AboutImage
+            base={middle}
+            length={middle}
+            src={images[4]}
+            className="middle-image z-2"
+          />
+
+          <motion.div className={`flex column mh-${margin} right-images z-1`}>
+            <AboutImage
+              base={rightBase}
+              length={rightLength}
+              src={images[5]}
+              className={`mb-${margin}`}
+            />
+            <AboutImage base={rightBase} length={rightLength} src={images[6]} />
+          </motion.div>
+
+          <motion.div className="flex column right-right-images z-0">
+            <AboutImage base={rightMost} length={rightMost} src={images[7]} />
+          </motion.div>
+        </ShrinkClick>
+      </div>
+
+      {/* <div
+        style={{
+          transform: transformStyle,
+        }}
+        className="absolute-fill bg-orange"
       >
         <ShrinkClick
           disabled={isAnimating}
@@ -212,7 +279,7 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
             className="parent-container flex relative pv-25"
           >
             <motion.div style={{}} className="flex center">
-              {/* Left Most Two */}
+              {/* Left Most Two 
               <motion.div className="flex column left-left-images z-1">
                 <HoverGrow stayActive clickable={false}>
                   <Rectangle base={leftMostBase} length={leftMostLength}>
@@ -234,8 +301,8 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
                   </Rectangle>
                 </HoverGrow>
               </motion.div>
-              {/* Left Middle Two */}
-              <motion.div className="flex column mh-20 left-images z-1">
+              {/* Left Middle Two 
+              <motion.div {`lassName="flex column mh-${margin} left-images z-1`}>
                 <HoverGrow stayActive clickable={false}>
                   <Rectangle base={leftBase} length={leftLength}>
                     <img
@@ -256,7 +323,7 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
                   </Rectangle>
                 </HoverGrow>
               </motion.div>
-              {/* Middle Image */}
+              {/* Middle Image 
               <HoverGrow
                 className="middle-image z-2"
                 stayActive
@@ -270,8 +337,8 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
                   />
                 </Rectangle>
               </HoverGrow>
-              {/* Right Middle Two */}
-              <motion.div className="flex column mh-20 right-images z-1">
+              {/* Right Middle Two 
+              <motion.div {`lassName="flex column mh-${margin} right-images z-1`}>
                 <HoverGrow stayActive clickable={false}>
                   <Rectangle base={rightBase} length={rightLength}>
                     <img
@@ -293,7 +360,7 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
                   </Rectangle>
                 </HoverGrow>
               </motion.div>
-              {/* Right Most  */}
+              {/* Right Most  
               <motion.div className="flex column right-right-images z-0">
                 <HoverGrow stayActive clickable={false}>
                   <Rectangle base={rightMost} length={rightMost}>
@@ -309,7 +376,7 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
             </motion.div>
           </motion.div>
         </ShrinkClick>
-      </div>
+      </div> */}
     </div>
   );
 };
