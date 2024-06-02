@@ -1,7 +1,7 @@
 import React from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { About, Contact, Home, Resume, RootPage } from "./pages";
+import { About, Contact, Home, NotFoundPage, Resume, RootPage } from "./pages";
 import { ScreenSizeProvider } from "./providers";
 
 import "react-responsive-modal/styles.css";
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/*",
+        element: <NotFoundPage />,
       },
     ],
   },
