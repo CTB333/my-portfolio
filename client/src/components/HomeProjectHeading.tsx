@@ -71,7 +71,7 @@ export const HomeProjectHeading = () => {
       <motion.p
         layout
         style={{ ...wordStyles }}
-        className="fs-1 dark color-primary"
+        className="fs-1 dark color-primary font-2"
       >
         Projects
       </motion.p>

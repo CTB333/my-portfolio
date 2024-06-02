@@ -23,9 +23,13 @@ export const ProjectSnippet = ({
         clickable={onPress ? true : false}
         stayActive
       >
-        <p className="fs-2 bold">{title}</p>
+        <p className={`fs-2 bold font-2 ${onPress ? "color-accent" : ""}`}>
+          {title}
+        </p>
         <p className="mt-10 mb-20">{desc}</p>
-        <p className="fs-3 bold">Tech Stack</p>
+        <p className={`fs-3 bold font-2 ${onPress ? "color-accent" : ""}`}>
+          Tech Stack
+        </p>
         <div className="flex column width">
           {firstTwo.map((props) => (
             <LanguageCard key={props.text} {...props} />

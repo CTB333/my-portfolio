@@ -14,8 +14,8 @@ export const RITLogo = () => {
       <Circle size={ltSmall ? 3 : 5} className="hidden" />
 
       <div className="absolute-fill flex center column space">
-        <p className="relative fs-1 bold color-secondary">Education</p>
-        <p className="relative z-2 fs-1 bold rit-text">RIT</p>
+        <p className="relative fs-1 bold color-secondary font-2">Education</p>
+        <p className="relative z-2 fs-1 bold rit-text font-2">RIT</p>
       </div>
 
       <div className="absolute-fill flex center">

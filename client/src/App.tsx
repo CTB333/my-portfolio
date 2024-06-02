@@ -17,6 +17,7 @@ import "./css/Flex.css";
 import "./css/Spacing.css";
 import "./css/Positioning.css";
 import "./css/Rounding.css";
+import "./css/Fonts.css";
 
 const router = createBrowserRouter([
   {

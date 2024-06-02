@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useScrollToTop } from "../hooks";
 import { useScreenSize } from "../providers";
-import { stringify } from "../utils";
 
 const useContact = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -66,9 +65,6 @@ const useContact = () => {
 
     if (!validate()) return;
 
-    console.log(`Sending Email`);
-    // console.log(captcha);
-
     const template = {
       user_name: name,
       user_email: email,
@@ -88,8 +84,8 @@ const useContact = () => {
         reset();
       })
       .catch((error) => {
-        console.log(`Email Error:`);
-        console.log(stringify(error));
+        // console.log(`Email Error:`);
+        // console.log(stringify(error));
         errorMessage("Something went wrong, please try again later");
       });
   };
@@ -140,7 +136,7 @@ export const Contact = () => {
           ltSmall ? "ph-10" : "ph-50"
         }`}
       >
-        <p className="fs-2 bold">Lets Get In Contact</p>
+        <p className="fs-2 bold font-2">Lets Get In Contact</p>
 
         <form className="flex column" ref={form} onSubmit={sendEmail}>
           <div className={`flex center  ${ltSmall ? "column" : "row space"}`}>

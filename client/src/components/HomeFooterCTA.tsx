@@ -52,31 +52,35 @@ const HomeFooterCTA = ({ onPress }: HomeFooterCTAProps) => {
           <div
             className={`bg-primary color-secondary rad-20 relative ${
               ltSmall ? "p-25" : "p-50"
-            } flex-1 ov-hidden`}
+            } flex-1 ov-hidden flex row`}
           >
             <motion.div
               style={backgroundStyle}
               className="absolute-fill z-0 bg-accent"
             />
-            <div className="flex center jc-start">
-              <p
-                className={`relative ov-hidden z-3 ${
-                  ltSmall ? "fs-2" : "fs-1"
-                } bold`}
-              >
-                Like these <br /> projects?
-              </p>
+            <div className="flex-1">
+              <div className="flex center jc-start">
+                <p
+                  className={`relative font-2 ov-hidden z-3 ${
+                    ltSmall ? "fs-2" : "fs-1"
+                  } bold`}
+                >
+                  Like these <br /> projects?
+                </p>
+              </div>
+              <div className="mt-25"></div>
+              <div className="flex center jc-end">
+                <p
+                  className={`relative font-2 ov-hidden z-3 ${
+                    ltSmall ? "fs-2" : "fs-1"
+                  } bold`}
+                >
+                  Lets make <br /> yours!
+                </p>
+              </div>
             </div>
-            <div className="mt-25"></div>
-            <div className="flex center jc-end">
-              <p
-                className={`relative ov-hidden z-3 ${
-                  ltSmall ? "fs-2" : "fs-1"
-                } bold`}
-              >
-                Lets make <br /> yours!
-              </p>
-            </div>
+
+            <div className="bg-red" style={{ width: "15%", height: "100%" }} />
           </div>
         </ShrinkClick>
       </HoverGrow>

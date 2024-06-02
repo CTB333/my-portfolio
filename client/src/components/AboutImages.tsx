@@ -6,6 +6,7 @@ import { HoverGrow, ShrinkClick } from "./common_animations";
 import { AnimationFunction, useRunAnimationOnce } from "../hooks";
 import { Easing, motion } from "framer-motion";
 import { useScreenSize } from "../providers";
+import { responsiveString } from "../utils";
 
 const useAboutImages = (onFunctionalPress?: () => void) => {
   const LeftMost = ".left-left-images";
@@ -60,7 +61,8 @@ const useAboutImages = (onFunctionalPress?: () => void) => {
     setIsAnimating(false);
   }, []);
 
-  const [scope, _toggleAnimation, animate] = useRunAnimationOnce({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [scope, _, animate] = useRunAnimationOnce({
     runAnimation: animateOpen,
     resetAnimation: animateCloseQuick,
   });
@@ -86,7 +88,7 @@ type AboutImagesProps = {
 export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
   const { scope, onAnimatedPress, isAnimating } = useAboutImages(onPress);
 
-  const { ltMedium, ltMedSmall, ltSmall } = useScreenSize();
+  const { ltMedium, ltMedSmall, ltSmall, width } = useScreenSize();
 
   const mediumMult = 0.75;
   const medSmallMult = 0.6;
@@ -161,15 +163,32 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
     ? 3.6 * mediumMult
     : 3.6;
 
+  const responsiveTransform = responsiveString(width, "", {
+    iphoneSE: "-26%",
+    iphoneXR: "-20%",
+    iphone12: "-23%",
+    iphone14Max: "-18%",
+    iphone5: "-40%",
+    iPadVertical: "-20%",
+    iPadHorizontal: "-7%",
+    iPadAirVertical: "-8%",
+    iPadAirHorizontal: "-15%",
+    iPadProHorizontal: "-6%",
+  });
+  const transformStyle =
+    responsiveTransform.length === 0
+      ? `translateX(${
+          ltSmall ? "-28%" : ltMedSmall ? "-20%" : ltMedium ? "-9%" : "-3%"
+        })`
+      : `translateX(${responsiveTransform})`;
+
   return (
     <div ref={scope} className="relative pv-25">
       <Rectangle className="hidden" size={hiddenSize} color={COLORS.accent} />
 
       <div
         style={{
-          transform: `translateX(${
-            ltSmall ? "-28%" : ltMedSmall ? "-20%" : ltMedium ? "-9%" : "-4%"
-          })`,
+          transform: transformStyle,
         }}
         className="absolute-fill"
       >

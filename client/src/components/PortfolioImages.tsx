@@ -112,7 +112,7 @@ const usePortfolioAnimation = () => {
 };
 
 export const PortfolioImages = () => {
-  const { scope: scrollRef, test } = usePortfolioAnimation();
+  const { scope: scrollRef } = usePortfolioAnimation();
 
   const { ltSmall } = useScreenSize();
   return (
@@ -123,7 +123,7 @@ export const PortfolioImages = () => {
         size={ltSmall ? 2 : 6}
       />
 
-      <div onClick={test} className="absolute-fill flex center  z-0">
+      <div className="absolute-fill flex center  z-0">
         <ShapeImage
           clickable={false}
           animationClass="PortfolioTriangleTop"

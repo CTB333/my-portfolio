@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { HoverGrow, ShrinkClick } from "./common_animations";
 import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../providers";
+import { COLORS } from "../constants";
 
 type LinkProps = {
   margin?: boolean;
@@ -18,8 +19,8 @@ const Link = ({ margin = true, text, onPress }: LinkProps) => {
     <HoverGrow onPress={onPress} stayActive>
       <motion.p
         initial={{ fontWeight: "normal" }}
-        whileHover={{ fontWeight: "bold" }}
-        transition={{ duration: 0.5 }}
+        whileHover={{ fontWeight: "bold", color: COLORS.accent }}
+        transition={{ duration: 0.1 }}
         className={`color-primary ${margin ? "mb-50" : ""} ${
           ltSmall ? "text-center" : ""
         }`}

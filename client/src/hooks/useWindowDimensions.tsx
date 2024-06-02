@@ -8,11 +8,7 @@ export function useWindowDimensions() {
 
   useEffect(() => {
     const debouncedResizeHandler = debounce(() => {
-      console.log("***** debounced resize"); // See the cool difference in console
       setDimension([document.body.clientWidth, document.body.clientHeight]);
-      // console.log(
-      //   `Width: ${document.body.clientWidth}px \nHeight: ${document.body.clientHeight}px\n\n`
-      // );
     }, 100); // 100m
 
     const ro = new ResizeObserver(debouncedResizeHandler);
@@ -24,18 +20,6 @@ export function useWindowDimensions() {
     };
   }, []);
 
-  // useEffect(() => {
-  // const debouncedResizeHandler = debounce(() => {
-  //   console.log("***** debounced resize"); // See the cool difference in console
-  //   setDimension([document.body.clientWidth, document.body.clientHeight]);
-  //   // console.log(
-  //   //   `Width: ${document.body.clientWidth}px \nHeight: ${document.body.clientHeight}px\n\n`
-  //   // );
-  // }, 100); // 100ms
-  //   // window.addEventListener("resize", debouncedResizeHandler);
-  //   document.addEventListener("resize", debouncedResizeHandler);
-  //   return () => document.removeEventListener("resize", debouncedResizeHandler);
-  // }, []); // Note this empty array. this effect should run only on mount and unmount
   return dimension;
 }
 const debounce = (

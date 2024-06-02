@@ -94,12 +94,7 @@ export const ScreenSizeProvider = ({ children }: ScreenSizeProviderProps) => {
     width,
   };
   return (
-    <div
-      // onResize={(e) => {
-      //   console.log(`Resizing`);
-      // }}
-      className="bg-orange page"
-    >
+    <div className="bg-orange page">
       <ScreenSizeContext.Provider value={value}>
         {children}
       </ScreenSizeContext.Provider>

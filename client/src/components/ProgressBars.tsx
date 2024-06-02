@@ -12,7 +12,7 @@ export const ProgressBars = ({ title, bars }: ProgressBarsProps) => {
   return (
     <div className="">
       <div className="flex center mb-50">
-        <p className="fs-2 bold text-center">{title}</p>
+        <p className="fs-2 bold text-center font-2">{title}</p>
       </div>
 
       <div className=" flex center column ph-15">

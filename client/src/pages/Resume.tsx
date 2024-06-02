@@ -77,7 +77,9 @@ export const Resume = () => {
       <HeroSection
         left={
           <div className="width flex column ai-start">
-            <p className="fs-2 bold color-primary mb-20">My Official Resume</p>
+            <p className="fs-2 bold color-primary font-2 mb-20">
+              My Official Resume
+            </p>
             <TextButton
               bold
               color={COLORS.primary}
@@ -120,7 +122,7 @@ export const Resume = () => {
               : "ai-start jc-start ph-100"
           }`}
         >
-          <p className="fs-1 bold color-secondary">All Skills</p>
+          <p className="fs-1 bold color-secondary font-2">All Skills</p>
         </div>
 
         <ProgressBars title="Soft Skills" bars={softSkills} />

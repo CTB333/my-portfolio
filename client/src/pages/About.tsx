@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useScrollToTop } from "../hooks";
 import { IMAGES } from "../assets";
 import { useScreenSize } from "../providers";
+import { responsiveNumber } from "../utils";
 
 const useAbout = () => {
   useScrollToTop();
@@ -70,7 +71,18 @@ const useAbout = () => {
 export const About = () => {
   const { images, toContact, changeImages } = useAbout();
 
-  const { ltMedium, ltSmall } = useScreenSize();
+  const { ltMedium, ltSmall, width } = useScreenSize();
+
+  const base =
+    4 *
+    responsiveNumber(width, ltSmall ? 0.8 : 1, {
+      iphone5: 0.65,
+    });
+  const length =
+    5 *
+    responsiveNumber(width, ltSmall ? 0.8 : 1, {
+      iphone5: 0.65,
+    });
 
   const SchoolPhoto = useCallback(
     () => (
@@ -82,8 +94,8 @@ export const About = () => {
         <HoverGrow stayActive>
           <Rectangle
             className="shadow"
-            base={ltSmall ? 4 * 0.8 : 4}
-            length={ltSmall ? 5 * 0.8 : 5}
+            base={base}
+            length={length}
             color={COLORS.accent}
           >
             <img src={images[1]} alt={"Me"} />
@@ -91,7 +103,7 @@ export const About = () => {
         </HoverGrow>
       </div>
     ),
-    [images, ltMedium, ltSmall]
+    [base, images, length, ltMedium]
   );
 
   const SchoolText = useCallback(
@@ -103,11 +115,12 @@ export const About = () => {
           coding and almost immediately I had found a passion for the work. I
           learned everything I could possibly find on coding, but never felt it
           was enough. I wanted to be better than just good, I wanted to learn
-          everything possible and I knew that higher education would be the best
-          option for my goals. So I moved out of my hometown and started life at
-          RIT with the goal of perfecting my craft. I'm only a couple of years
-          away from graduation now and while I think I have made progress theres
-          still a lot I could learn.
+          everything possible and I wanted to know it like the back of my hand.
+          For me continuing school would be the best option for my goals. So I
+          moved out of my hometown and started life at RIT with the goal of
+          perfecting my craft. I'm only a couple of years away from graduation
+          now and while I think I have made a lot of progress towards my goals
+          theres still a lot of work to do and much that I could learn.
         </p>
       </div>
     ),
@@ -119,7 +132,7 @@ export const About = () => {
       <HeroSection
         left={
           <div className="flex column color-primary">
-            <p className="fs-2 bold">
+            <p className="fs-2 font-2 bold">
               Hi My Name Is <br /> Colin Tondreau
             </p>
             <p className="mv-15">
@@ -148,8 +161,8 @@ export const About = () => {
             <HoverGrow stayActive>
               <Rectangle
                 className="shadow"
-                base={ltSmall ? 4 * 0.8 : 4}
-                length={ltSmall ? 5 * 0.8 : 5}
+                base={base}
+                length={length}
                 color={COLORS.primary}
               >
                 <img src={images[0]} alt={"Me"} />
@@ -162,7 +175,7 @@ export const About = () => {
       <RITLogo />
 
       <div className="flex center">
-        <p className="fs-2 bold text-center">
+        <p className="fs-2 font-2 bold text-center">
           Rochester Institute of Technology
         </p>
       </div>
@@ -184,18 +197,17 @@ export const About = () => {
         <AboutImages onPress={changeImages} images={images.splice(2)} />
 
         <div className={`pt-50 ${ltSmall ? "ph-50" : "ph-100"}`}>
-          <p className="fs-1 bold text-center">This Is Me</p>
+          <p className="fs-1 bold font-2 text-center">This Is Me</p>
           <p className={"text-center"}>
-            Originally I had second thoughts about attending college, it wasn't
-            until my senior year that I was introduced to software engineering
-            and coding and almost immediately I had found a passion for the
-            work. I learned everything I could possibly find on coding, but
-            never felt it was enough. I wanted to be better than just good, I
-            wanted to learn everything possible and I knew that higher education
-            would be the best option for my goals. So I moved out of my hometown
-            and started life at RIT with the goal of perfecting my craft. I'm
-            only a couple of years away from graduation now and while I think I
-            have made progress theres still a lot I could learn.
+            At my core I am a artist, an engineer and a student. I've always
+            loved drawing, coloring and creating appealing pictures sometimes
+            becoming obsessed with the small details. As a pre-teen I would stay
+            up past my bed time on YouTube searching up a different topic of
+            'How to build/create/make abcd...' and as I ended middle school I
+            became obsessed with figuring out electronics. I thought I was going
+            to be an electrical engineer and then I found software and it was
+            the perfect blend of who I am. Above are the people/companions that
+            mean the most to me and without them I wouldn't be where I am today.
           </p>
         </div>
       </div>

@@ -13,7 +13,11 @@ export const HomeLeftHero = ({ toContact }: HomeLeftHeroProps) => {
 
   return (
     <div className="flex column center width height">
-      <p className={`${ltSmall ? "text-center" : ""} fs-2 color-primary bold`}>
+      <p
+        className={`${
+          ltSmall ? "text-center" : ""
+        } font-2 fs-2 color-primary bold`}
+      >
         Elevating businesses with creative software solutions.
       </p>
       <p className={`${ltSmall ? "text-center" : ""} color-primary mv-15`}>

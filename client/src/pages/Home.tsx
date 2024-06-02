@@ -196,7 +196,7 @@ export const Home = () => {
       </motion.div>
 
       <div className="bg-secondary color-primary">
-        <p className="fs-2 bold color-primary text-center pt-25 mb-100">
+        <p className="fs-1 font-2 bold color-primary text-center pt-25 mb-100">
           Proffesional Experience
         </p>
 
