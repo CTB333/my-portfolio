@@ -104,18 +104,6 @@ export const Home = () => {
     [getLanguages]
   );
 
-  // const FalkonerText = useCallback(
-  //   () => (
-  //     <ProjectSnippet
-  //       onPress={() => selectModal("Falkoner")}
-  //       title="Falkoner"
-  //       desc="My introduction to working within agile environments, my team and I created an e-services platform with basic authentication and administration capabilities centered around falconry."
-  //       techStack={getLanguages(FalkonerTechStack)}
-  //     />
-  //   ),
-  //   [getLanguages, selectModal]
-  // );
-
   const PortfolioText = useCallback(
     () => (
       <ProjectSnippet

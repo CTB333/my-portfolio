@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { Rectangle } from "./shapes";
 import { COLORS } from "../constants";
-import { HoverGrow, ShrinkClick } from "./common_animations";
+import { ShrinkClick } from "./common_animations";
 
 import { AnimationFunction, useRunAnimationOnce } from "../hooks";
 import { Easing, motion } from "framer-motion";
 import { useScreenSize } from "../providers";
-import { responsiveString } from "../utils";
 import { AboutImage } from "./AboutImage";
 
 const useAboutImages = (onFunctionalPress?: () => void) => {
@@ -89,7 +88,7 @@ type AboutImagesProps = {
 export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
   const { scope, onAnimatedPress, isAnimating } = useAboutImages(onPress);
 
-  const { ltMedium, ltMedSmall, ltSmall, width } = useScreenSize();
+  const { ltMedium, ltMedSmall, ltSmall } = useScreenSize();
 
   const mediumMult = 0.75;
   const medSmallMult = 0.6;
@@ -165,25 +164,6 @@ export const AboutImages = ({ images, onPress }: AboutImagesProps) => {
     : ltMedium
     ? 3.6 * mediumMult
     : 3.6;
-
-  const responsiveTransform = responsiveString(width, "", {
-    iphoneSE: "-26%",
-    iphoneXR: "-20%",
-    iphone12: "-23%",
-    iphone14Max: "-18%",
-    iphone5: "-40%",
-    iPadVertical: "-20%",
-    iPadHorizontal: "-7%",
-    iPadAirVertical: "-8%",
-    iPadAirHorizontal: "-15%",
-    iPadProHorizontal: "-6%",
-  });
-  // const transformStyle: string =
-  //   responsiveTransform.length === 0
-  //     ? `translateX(${
-  //         ltSmall ? "-28%" : ltMedSmall ? "-20%" : ltMedium ? "-9%" : "-3%"
-  //       })`
-  //     : `translateX(${responsiveTransform})`;
 
   return (
     <div ref={scope} className="relative pv-25">
