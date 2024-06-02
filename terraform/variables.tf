@@ -39,7 +39,7 @@ variable "branch_name" {
 variable "domain_name" {
   type        = string
   description = "AWS Amplify Domain Name"
-  default     = "WorkinOnIt.com"
+  default     = "colintondreau.com"
 }
 
 variable "admin_policy" {

@@ -49,7 +49,7 @@ resource "aws_amplify_app" "this" {
     }
     
     custom_rule {
-        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json|pdf)$)([^.]+$)/>"
+        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|ttf|map|json|pdf)$)([^.]+$)/>"
         status = "200"
         target = "/index.html"
     }
@@ -72,15 +72,16 @@ resource "aws_amplify_branch" "this" {
     depends_on = [ aws_amplify_app.this ]
 }
 
-# resource "aws_amplify_domain_association" "this" {
-#     app_id = aws_amplify_app.this.id
-#     domain_name = var.domain_name
-#     wait_for_verification = false
+resource "aws_amplify_domain_association" "this" {
+    app_id = aws_amplify_app.this.id
+    domain_name = var.domain_name
+    wait_for_verification = false
 
-#     sub_domain {
-#         branch_name = aws_amplify_branch.this.branch_name
-#         prefix = var.branch_name
-#     }
+    # https://colintondreau.com
+    sub_domain {
+        branch_name = aws_amplify_branch.this.branch_name
+        prefix = ""
+    }
 
-#     depends_on = [ aws_amplify_app.this ]
-# }
+    depends_on = [ aws_amplify_app.this ]
+}
