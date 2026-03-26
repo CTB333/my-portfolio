@@ -85,3 +85,25 @@ resource "aws_amplify_domain_association" "this" {
 
     depends_on = [ aws_amplify_app.this ]
 }
+
+resource "null_resource" "trigger_amplify_deployment" {
+  depends_on = [aws_amplify_branch.this]
+
+  # Force this command to be triggered every time this terraform file is ran
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  # The command to be ran
+  provisioner "local-exec" {
+    command = "aws amplify start-job --app-id ${aws_amplify_app.this.id} --branch-name ${aws_amplify_branch.this.branch_name} --job-type RELEASE"
+  }
+}
+
+output "invoke_url" {
+    value = "https://${var.branch_name}.${aws_amplify_app.this.id}.amplifyapp.com"
+}
+
+output "domain_url" {
+    value = "https://${var.domain_name}"
+}
