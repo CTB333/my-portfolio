@@ -12,17 +12,18 @@ type InputProps = {
   >["type"];
   longText?: boolean;
   required?: boolean;
+  dark?: boolean;
 };
 
 export const Input = ({
   value,
   onValueChange,
-
   placeHolder,
   name,
   type = "text",
   longText,
   required,
+  dark,
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -33,7 +34,7 @@ export const Input = ({
       }}
       className="flex column"
     >
-      <p>{placeHolder}</p>
+      <p className={"color-secondary"}>{placeHolder}</p>
       {longText ? (
         <textarea
           style={{ resize: "none" }}

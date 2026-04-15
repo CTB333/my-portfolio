@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "this" {
+data "aws_iam_policy_document" "tondreau_tech_amplify_policy_doc" {
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
@@ -10,9 +10,9 @@ data "aws_iam_policy_document" "this" {
 }
 
 
-resource "aws_iam_role" "this" {
+resource "aws_iam_role" "tondreau_tech_amplify_role" {
   name               = "test-role"
-  assume_role_policy = data.aws_iam_policy_document.this.json
+  assume_role_policy = data.aws_iam_policy_document.tondreau_tech_amplify_policy_doc.json
   managed_policy_arns = [
     var.admin_policy,
     var.backend_policy
@@ -20,74 +20,79 @@ resource "aws_iam_role" "this" {
 }
 
 
-resource "aws_amplify_app" "this" {
-    name = var.app_name
-    repository = var.repository
-    access_token = var.token
-    build_spec = file("./build.yml")
+resource "aws_amplify_app" "tondreau_tech_amplify_app" {
+  name         = var.app_name
+  repository   = var.repository
+  access_token = var.token
+  build_spec   = file("./build.yml")
 
-    platform = "WEB"
-    enable_auto_branch_creation = true
-    enable_branch_auto_build = true
+  platform                    = "WEB"
+  enable_auto_branch_creation = true
+  enable_branch_auto_build    = true
 
-    iam_service_role_arn = aws_iam_role.this.arn
+  iam_service_role_arn = aws_iam_role.tondreau_tech_amplify_role.arn
 
-    auto_branch_creation_patterns = [
-        "*",
-        "*/**",
-    ]
-    environment_variables = {
-        Name           = var.app_name
-        Provisioned_by = "Terraform"
-        AMPLIFY_DIFF_DEPLOY = false
-        AMPLIFY_MONOREPO_APP_ROOT = var.app_root
+  auto_branch_creation_patterns = [
+    "*",
+    "*/**",
+  ]
+  environment_variables = {
+    Name                      = var.app_name
+    Provisioned_by            = "Terraform"
+    AMPLIFY_DIFF_DEPLOY       = false
+    AMPLIFY_MONOREPO_APP_ROOT = var.app_root
 
-        REACT_APP_CAPTCHA="6LeRZ-YpAAAAAO9k5OSackA6EZBzf7va1antq8oY"
-        REACT_APP_EMAIL_SERVICE="service_emrytxi"
-        REACT_APP_EMAIL_TEMPLATE="template_r0oy6bh"
-        REACT_APP_EMAIL_KEY="GzqxzqZRc5_oF4cCw"
-    }
-    
-    custom_rule {
-        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|ttf|map|json|pdf)$)([^.]+$)/>"
-        status = "200"
-        target = "/index.html"
-    }
-    custom_rule {
-        source = "/<*>"
-        status = "404"
-        target = "/index.html"
-    }
+    REACT_APP_CAPTCHA        = "6LeRZ-YpAAAAAO9k5OSackA6EZBzf7va1antq8oY"
+    REACT_APP_EMAIL_SERVICE  = "service_emrytxi"
+    REACT_APP_EMAIL_TEMPLATE = "template_r0oy6bh"
+    REACT_APP_EMAIL_KEY      = "GzqxzqZRc5_oF4cCw"
+
+    REACT_APP_GRADUATION_RSVPS_API_URL = local.graduation_rsvp_url
+    REACT_APP_CONSOLE_PASSWORD         = var.console_password
+  }
+
+  custom_rule {
+    source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|ttf|map|json|pdf)$)([^.]+$)/>"
+    status = "200"
+    target = "/index.html"
+  }
+  custom_rule {
+    source = "/<*>"
+    status = "404"
+    target = "/index.html"
+  }
+
+  depends_on = [local.graduation_rsvp_url]
 
 }
 
-resource "aws_amplify_branch" "this" {
-    app_id = aws_amplify_app.this.id
-    branch_name = var.branch_name
+resource "aws_amplify_branch" "tondreau_tech_production_branch" {
+  app_id      = aws_amplify_app.tondreau_tech_amplify_app.id
+  branch_name = var.branch_name
 
-    enable_auto_build = true
-    framework = "React"
-    stage     = "PRODUCTION"
+  enable_auto_build = true
+  framework         = "React"
+  stage             = "PRODUCTION"
 
-    depends_on = [ aws_amplify_app.this ]
+  depends_on = [aws_amplify_app.tondreau_tech_amplify_app]
 }
 
-resource "aws_amplify_domain_association" "this" {
-    app_id = aws_amplify_app.this.id
-    domain_name = var.domain_name
-    wait_for_verification = false
+resource "aws_amplify_domain_association" "tondreau_tech_domain" {
+  app_id                = aws_amplify_app.tondreau_tech_amplify_app.id
+  domain_name           = var.domain_name
+  wait_for_verification = false
 
-    # https://colintondreau.com
-    sub_domain {
-        branch_name = aws_amplify_branch.this.branch_name
-        prefix = ""
-    }
+  # https://colintondreau.com
+  sub_domain {
+    branch_name = aws_amplify_branch.tondreau_tech_production_branch.branch_name
+    prefix      = ""
+  }
 
-    depends_on = [ aws_amplify_app.this ]
+  depends_on = [aws_amplify_app.tondreau_tech_amplify_app]
 }
 
 resource "null_resource" "trigger_amplify_deployment" {
-  depends_on = [aws_amplify_branch.this]
+  depends_on = [aws_amplify_branch.tondreau_tech_production_branch]
 
   # Force this command to be triggered every time this terraform file is ran
   triggers = {
@@ -96,14 +101,14 @@ resource "null_resource" "trigger_amplify_deployment" {
 
   # The command to be ran
   provisioner "local-exec" {
-    command = "aws amplify start-job --app-id ${aws_amplify_app.this.id} --branch-name ${aws_amplify_branch.this.branch_name} --job-type RELEASE"
+    command = "aws amplify start-job --app-id ${aws_amplify_app.tondreau_tech_amplify_app.id} --branch-name ${aws_amplify_branch.tondreau_tech_production_branch.branch_name} --job-type RELEASE"
   }
 }
 
 output "invoke_url" {
-    value = "https://${var.branch_name}.${aws_amplify_app.this.id}.amplifyapp.com"
+  value = "https://${var.branch_name}.${aws_amplify_app.tondreau_tech_amplify_app.id}.amplifyapp.com"
 }
 
 output "domain_url" {
-    value = "https://${var.domain_name}"
+  value = "https://${var.domain_name}"
 }

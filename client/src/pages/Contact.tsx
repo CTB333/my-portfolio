@@ -77,15 +77,13 @@ const useContact = () => {
         CONSTANTS.emailJs.serviceId,
         CONSTANTS.emailJs.templateId,
         template,
-        CONSTANTS.emailJs.publicKey
+        CONSTANTS.emailJs.publicKey,
       )
       .then((result) => {
         successMessage();
         reset();
       })
       .catch((error) => {
-        // console.log(`Email Error:`);
-        // console.log(stringify(error));
         errorMessage("Something went wrong, please try again later");
       });
   };

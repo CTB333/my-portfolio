@@ -42,6 +42,10 @@
   align-items: flex-start;
 }
 
+.ai-center {
+  align-items: center;
+}
+
 .ai-end {
   align-items: flex-end;
 }

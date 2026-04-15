@@ -1,7 +1,17 @@
 import React from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { About, Contact, Home, NotFoundPage, Resume, RootPage } from "./pages";
+import {
+  About,
+  Contact,
+  GraduationConsole,
+  GraduationInvite,
+  Home,
+  NotFoundPage,
+  Resume,
+  RootPage,
+  RSVP,
+} from "./pages";
 import { ScreenSizeProvider } from "./providers";
 
 import "react-responsive-modal/styles.css";
@@ -18,6 +28,7 @@ import "./css/Spacing.css";
 import "./css/Positioning.css";
 import "./css/Rounding.css";
 import "./css/Fonts.css";
+import { SnackbarProvider } from "notistack";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +49,18 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
+        path: "/graduation/invite",
+        element: <GraduationInvite />,
+      },
+      {
+        path: "/graduation/rsvp",
+        element: <RSVP />,
+      },
+      {
+        path: "/graduation/console",
+        element: <GraduationConsole />,
+      },
+      {
         path: "/*",
         element: <NotFoundPage />,
       },
@@ -47,9 +70,15 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ScreenSizeProvider>
-      <RouterProvider router={router} />
-    </ScreenSizeProvider>
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      autoHideDuration={4000}
+    >
+      <ScreenSizeProvider>
+        <RouterProvider router={router} />
+      </ScreenSizeProvider>
+    </SnackbarProvider>
   );
 }
 
