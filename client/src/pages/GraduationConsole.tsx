@@ -11,9 +11,13 @@ import { CONSTANTS } from "../constants";
 
 type RSVP = {
   name: string;
+  phone: string;
+  isComing: boolean;
   numBringing: number;
   guestList: string[];
   familySide: string;
+  attendingDinner: boolean;
+  keepInContact: boolean;
 };
 
 const FAMILY_SIDE_OPTIONS = [
@@ -31,6 +35,15 @@ export const GraduationConsole = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFamilySide, setSelectedFamilySide] = useState("");
+  const [filterByTextLater, setFilterByTextLater] = useState<
+    true | false | null
+  >(null);
+  const [filterByComing, setFilterByComing] = useState<true | false | null>(
+    null,
+  );
+  const [filterByDinner, setFilterByDinner] = useState<true | false | null>(
+    null,
+  );
 
   // Login state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,25 +71,51 @@ export const GraduationConsole = () => {
     () => {
       if (!isLoggedIn) return;
 
-      const fetchRsvps = async () => {
-        const res = await get<{ rsvps: RSVP[] }>(
-          CONSTANTS.apiEndpoints.graduationRsvps + "/all",
-        );
-
-        if (res.err || !res.data) {
-          console.log(`Error fetching RSVPs: ${res.err}`);
-          errorSnack("Failed to fetch RSVPs.", true, false);
-        } else {
-          setRsvps(res.data.rsvps);
-        }
-        setLoading(false);
-      };
-
       fetchRsvps();
     },
     [isLoggedIn],
     isLoggedIn ? 50 : 0,
   );
+
+  const toggleTextLaterFilter = () => {
+    setFilterByTextLater((prev) => {
+      if (prev === null) return true;
+      if (prev === true) return false;
+      return null;
+    });
+  };
+
+  const toggleComingFilter = () => {
+    setFilterByComing((prev) => {
+      if (prev === null) return true;
+      if (prev === true) return false;
+      return null;
+    });
+  };
+
+  const toggleDinnerFilter = () => {
+    setFilterByDinner((prev) => {
+      if (prev === null) return true;
+      if (prev === true) return false;
+      return null;
+    });
+  };
+
+  const fetchRsvps = async () => {
+    setLoading(true);
+
+    const res = await get<{ rsvps: RSVP[] }>(
+      CONSTANTS.apiEndpoints.graduationRsvps + "/all",
+    );
+
+    if (res.err || !res.data) {
+      console.log(`Error fetching RSVPs: ${res.err}`);
+      errorSnack("Failed to fetch RSVPs.", true, false);
+    } else {
+      setRsvps(res.data.rsvps);
+    }
+    setLoading(false);
+  };
 
   const filteredRsvps = rsvps.filter(
     (rsvp) =>
@@ -86,7 +125,11 @@ export const GraduationConsole = () => {
         rsvp.guestList.some((guest) =>
           guest.toLowerCase().includes(searchTerm.toLowerCase()),
         )) &&
-      (selectedFamilySide === "" || rsvp.familySide === selectedFamilySide),
+      (selectedFamilySide === "" || rsvp.familySide === selectedFamilySide) &&
+      (filterByTextLater === null ||
+        rsvp.keepInContact === filterByTextLater) &&
+      (filterByComing === null || rsvp.isComing === filterByComing) &&
+      (filterByDinner === null || rsvp.attendingDinner === filterByDinner),
   );
 
   // Show login form if not logged in
@@ -186,8 +229,91 @@ export const GraduationConsole = () => {
               onValueChange={setSearchTerm}
             />
           </div>
-          <div className="width-100 flex row jc-end">
-            <div style={{ width: "35%" }}>
+          <div
+            className="width-100 flex row ai-end space-between"
+            style={{ gap: "14px" }}
+          >
+            <div className="flex row" style={{ flexGrow: 1, gap: "14px" }}>
+              <div style={{ width: "25%" }}>
+                <TextButton
+                  text={
+                    filterByComing === null
+                      ? "All"
+                      : filterByComing === true
+                        ? "Coming"
+                        : "Not Coming"
+                  }
+                  buttonColor={
+                    filterByComing === null || filterByComing === true
+                      ? "#944bbb"
+                      : "#000000"
+                  }
+                  color={
+                    filterByComing === null
+                      ? "#FFFFFF"
+                      : filterByComing === true
+                        ? "#944bbb"
+                        : "#000000"
+                  }
+                  outline={filterByComing === null ? false : true}
+                  onPress={toggleComingFilter}
+                />
+              </div>
+
+              <div style={{ width: "25%" }}>
+                <TextButton
+                  text={
+                    filterByDinner === null
+                      ? "All"
+                      : filterByDinner === true
+                        ? "Dinner"
+                        : "No Dinner"
+                  }
+                  buttonColor={
+                    filterByDinner === null || filterByDinner === true
+                      ? "#944bbb"
+                      : "#000000"
+                  }
+                  color={
+                    filterByDinner === null
+                      ? "#FFFFFF"
+                      : filterByDinner === true
+                        ? "#944bbb"
+                        : "#000000"
+                  }
+                  outline={filterByDinner === null ? false : true}
+                  onPress={toggleDinnerFilter}
+                />
+              </div>
+
+              <div style={{ width: "25%" }}>
+                <TextButton
+                  text={
+                    filterByTextLater === null
+                      ? "All"
+                      : filterByTextLater === true
+                        ? "Text"
+                        : "Dont Text"
+                  }
+                  buttonColor={
+                    filterByTextLater === null || filterByTextLater === true
+                      ? "#944bbb"
+                      : "#000000"
+                  }
+                  color={
+                    filterByTextLater === null
+                      ? "#FFFFFF"
+                      : filterByTextLater === true
+                        ? "#944bbb"
+                        : "#000000"
+                  }
+                  outline={filterByTextLater === null ? false : true}
+                  onPress={toggleTextLaterFilter}
+                />
+              </div>
+            </div>
+
+            <div style={{ width: "25%" }}>
               <Select
                 dark
                 placeHolder="Filter by Family Side"
@@ -215,32 +341,9 @@ export const GraduationConsole = () => {
                     padding: "12px",
                     color: "var(--primary)",
                     fontWeight: "bold",
-                    width: "20%",
                   }}
                 >
-                  Name
-                </th>
-                <th
-                  style={{
-                    border: "1px solid var(--secondary)",
-                    padding: "12px",
-                    color: "var(--primary)",
-                    fontWeight: "bold",
-                    width: "20%",
-                  }}
-                >
-                  # of People Joining
-                </th>
-                <th
-                  style={{
-                    border: "1px solid var(--secondary)",
-                    padding: "12px",
-                    color: "var(--primary)",
-                    fontWeight: "bold",
-                    width: "45%",
-                  }}
-                >
-                  Guest List
+                  Coming To
                 </th>
 
                 <th
@@ -249,10 +352,57 @@ export const GraduationConsole = () => {
                     padding: "12px",
                     color: "var(--primary)",
                     fontWeight: "bold",
-                    width: "15%",
+                    maxWidth: "25%",
+                    width: "20%",
+                  }}
+                >
+                  Name
+                </th>
+
+                <th
+                  style={{
+                    border: "1px solid var(--secondary)",
+                    padding: "12px",
+                    color: "var(--primary)",
+                    fontWeight: "bold",
                   }}
                 >
                   Family Side
+                </th>
+
+                <th
+                  style={{
+                    border: "1px solid var(--secondary)",
+                    padding: "12px",
+                    color: "var(--primary)",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Text Later
+                </th>
+
+                <th
+                  style={{
+                    border: "1px solid var(--secondary)",
+                    padding: "12px",
+                    color: "var(--primary)",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Phone #
+                </th>
+
+                <th
+                  style={{
+                    border: "1px solid var(--secondary)",
+                    padding: "12px",
+                    color: "var(--primary)",
+                    fontWeight: "bold",
+                    width: "45%",
+                    minWidth: "35%",
+                  }}
+                >
+                  Guest List
                 </th>
               </tr>
             </thead>
@@ -272,29 +422,25 @@ export const GraduationConsole = () => {
                       padding: "12px",
                     }}
                   >
+                    <p>
+                      {rsvp.isComing
+                        ? rsvp.attendingDinner
+                          ? "Graduation & Dinner"
+                          : "Graduation"
+                        : "Not Coming"}
+                    </p>
+                  </td>
+
+                  <td
+                    className="text-center"
+                    style={{
+                      border: "1px solid var(--secondary)",
+                      padding: "12px",
+                    }}
+                  >
                     {rsvp.name}
                   </td>
-                  <td
-                    className="text-center"
-                    style={{
-                      border: "1px solid var(--secondary)",
-                      padding: "12px",
-                    }}
-                  >
-                    {rsvp.numBringing}
-                  </td>
-                  <td
-                    className="text-center"
-                    style={{
-                      border: "1px solid var(--secondary)",
-                      padding: "12px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {rsvp.guestList.length > 0
-                      ? rsvp.guestList.join(", ")
-                      : "None"}
-                  </td>
+
                   <td
                     className="text-center"
                     style={{
@@ -304,10 +450,58 @@ export const GraduationConsole = () => {
                   >
                     {rsvp.familySide}
                   </td>
+
+                  <td
+                    className="text-center"
+                    style={{
+                      border: "1px solid var(--secondary)",
+                      padding: "12px",
+                    }}
+                  >
+                    {rsvp.keepInContact ? "Yes" : "No"}
+                  </td>
+
+                  <td
+                    className="text-center"
+                    style={{
+                      border: "1px solid var(--secondary)",
+                      padding: "12px",
+                    }}
+                  >
+                    {rsvp.phone}
+                  </td>
+
+                  <td
+                    className={rsvp.guestList.length === 0 ? "text-center" : ""}
+                    style={{
+                      border: "1px solid var(--secondary)",
+                      padding: "12px",
+                    }}
+                  >
+                    {rsvp.guestList.length === 0 && <span>No guests</span>}
+                    {rsvp.guestList.length > 0 && (
+                      <>
+                        <p className="bold">Bringing: {rsvp.numBringing - 1}</p>
+                        {rsvp.guestList.map((guest, idx) => (
+                          <p key={idx}>&nbsp;&nbsp;{guest}</p>
+                        ))}
+                      </>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex jc-end mt-20">
+          <TextButton
+            disabled={loading}
+            onPress={fetchRsvps}
+            buttonColor="#944bbb"
+            color="#FFFFFF"
+            text={loading ? "Loading..." : "↻ Reload"}
+          />
         </div>
 
         {filteredRsvps.length === 0 && (

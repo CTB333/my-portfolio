@@ -32,6 +32,12 @@ export const RSVP = () => {
 
   const [familySide, setFamilySide] = useState<FamilySide | "">("");
 
+  const [attendingDinner, setAttendingDinner] = useState(false);
+  const [keepInContact, setKeepInContact] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
   const { post } = useFetch();
   const successSnack = useSuccessSnack();
   const errorSnack = useErrorSnack();
@@ -65,14 +71,18 @@ export const RSVP = () => {
       if (isNaN(num) || num < 1) {
         return errorSnack("Number of people must be at least 1.", true, false);
       }
+    }
 
-      if (!familySide) {
-        return errorSnack(
-          "Please select which side of the family you are from.",
-          true,
-          false,
-        );
-      }
+    if (!familySide) {
+      return errorSnack(
+        "Please select which side of the family you are from.",
+        true,
+        false,
+      );
+    }
+
+    if (keepInContact && phoneNumber.trim().length === 0) {
+      return errorSnack("Please enter your phone number.", true, false);
     }
 
     return true;
@@ -85,15 +95,25 @@ export const RSVP = () => {
 
     const data = {
       name,
+      isComing,
       numBringing: parseInt(numBringing, 10),
       guestList,
       familySide,
+      attendingDinner,
+      keepInContact,
+      phone: phoneNumber,
     };
 
+    setLoading(true);
+
+    // const tempUrl = `https://6vnnxytdt0.execute-api.us-east-1.amazonaws.com/DEV/graduation-rsvp`;
     const res = await post(
       CONSTANTS.apiEndpoints.graduationRsvps + "/create",
+      // tempUrl + "/create",
       data,
     );
+
+    setLoading(false);
 
     if (res.err || !res.data) {
       console.log(`Error submitting RSVP: ${res.err}`);
@@ -107,7 +127,48 @@ export const RSVP = () => {
     setGuestList([""]);
     setFamilySide("");
     setShowGuestList(false);
+    setAttendingDinner(false);
+    setKeepInContact(false);
+    setPhoneNumber("");
   };
+
+  const toggleAttendingDinner = () => setAttendingDinner((prev) => !prev);
+  const toggleKeepInContact = () => setKeepInContact((prev) => !prev);
+
+  const FamilySidePicker = () => (
+    <div className="flex column mt-25" style={{ gap: "14px" }}>
+      <p className="fs-5 bold color-secondary mb-10">
+        Which side of the family are you from?
+      </p>
+      <div
+        className="flex center row"
+        style={{ gap: "12px", flexWrap: "wrap" }}
+      >
+        <CheckboxInput
+          checked={familySide === FamilySide.Mom}
+          onChange={(checked) => setFamilySide(checked ? FamilySide.Mom : "")}
+          label="Mom"
+        />
+        <CheckboxInput
+          checked={familySide === FamilySide.Dad}
+          onChange={(checked) => setFamilySide(checked ? FamilySide.Dad : "")}
+          label="Dad"
+        />
+        <CheckboxInput
+          checked={familySide === FamilySide.Lex}
+          onChange={(checked) => setFamilySide(checked ? FamilySide.Lex : "")}
+          label="Lex"
+        />
+        <CheckboxInput
+          checked={familySide === FamilySide.Friends}
+          onChange={(checked) =>
+            setFamilySide(checked ? FamilySide.Friends : "")
+          }
+          label="Friends"
+        />
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -197,58 +258,30 @@ export const RSVP = () => {
               </div>
             )}
 
+            <FamilySidePicker />
+
             <div className="flex column mt-25" style={{ gap: "14px" }}>
               <p className="fs-5 bold color-secondary mb-10">
-                Which side of the family are you from?
+                Do you plan on staying after graduation for dinner?
               </p>
-              <div
-                className="flex center row"
-                style={{ gap: "12px", flexWrap: "wrap" }}
-              >
+              <div className="flex center row" style={{ gap: "14px" }}>
                 <CheckboxInput
-                  checked={familySide === FamilySide.Mom}
-                  onChange={(checked) =>
-                    setFamilySide(checked ? FamilySide.Mom : "")
-                  }
-                  label="Mom"
+                  checked={attendingDinner}
+                  onChange={toggleAttendingDinner}
+                  label="Yes"
                 />
                 <CheckboxInput
-                  checked={familySide === FamilySide.Dad}
-                  onChange={(checked) =>
-                    setFamilySide(checked ? FamilySide.Dad : "")
-                  }
-                  label="Dad"
-                />
-                <CheckboxInput
-                  checked={familySide === FamilySide.Lex}
-                  onChange={(checked) =>
-                    setFamilySide(checked ? FamilySide.Lex : "")
-                  }
-                  label="Lex"
-                />
-                <CheckboxInput
-                  checked={familySide === FamilySide.Friends}
-                  onChange={(checked) =>
-                    setFamilySide(checked ? FamilySide.Friends : "")
-                  }
-                  label="Friends"
+                  checked={!attendingDinner}
+                  onChange={toggleAttendingDinner}
+                  label="No"
                 />
               </div>
-            </div>
-
-            <div className="mt-30">
-              <TextButton
-                onPress={handleSubmit}
-                buttonColor="#944bbb"
-                color="#FFFFFF"
-                text="Submit RSVP"
-              />
             </div>
           </div>
         )}
 
         {!isComing && (
-          <div className="flex column mt-30">
+          <div className="flex column mv-30">
             <p className="fs-5 color-secondary text-center">
               Sorry to hear that you won't be able to make it.
             </p>
@@ -256,6 +289,61 @@ export const RSVP = () => {
               Check back as the date approaches for a link to the livestream of
               the event to tune in from home.
             </p>
+          </div>
+        )}
+
+        <div className="flex column mt-25" style={{ gap: "14px" }}>
+          <p className="fs-5 bold color-secondary mb-10">
+            Do you want to get updates for future graduation-related events?
+          </p>
+          <div className="flex center row" style={{ gap: "14px" }}>
+            <CheckboxInput
+              checked={keepInContact}
+              onChange={toggleKeepInContact}
+              label="Yes"
+            />
+            <CheckboxInput
+              checked={!keepInContact}
+              onChange={toggleKeepInContact}
+              label="No"
+            />
+          </div>
+          {keepInContact && (
+            <div>
+              {!isComing && (
+                <div className="mb-20">
+                  <div className="mb-20">
+                    <Input
+                      dark
+                      placeHolder="Name"
+                      value={name}
+                      onValueChange={setName}
+                    />
+                  </div>
+                  <FamilySidePicker />
+                </div>
+              )}
+
+              <Input
+                dark
+                type="tel"
+                placeHolder="Phone number"
+                value={phoneNumber}
+                onValueChange={setPhoneNumber}
+              />
+            </div>
+          )}
+        </div>
+
+        {(isComing || keepInContact) && (
+          <div className="mt-30">
+            <TextButton
+              disabled={loading}
+              onPress={handleSubmit}
+              buttonColor="#944bbb"
+              color="#FFFFFF"
+              text={loading ? "Submitting..." : "Submit RSVP"}
+            />
           </div>
         )}
       </div>
