@@ -31,8 +31,6 @@ const EVENTS: Event[] = [
   },
 ];
 
-// https://www.google.com/maps/place/ESL+Global+Cybersecurity+Institute/@43.0838377,-77.6846771,17z/data=!4m10!1m2!2m1!1sCYB+Building+RIT+Rochester+NY!3m6!1s0x89d14d2c49d8c867:0x334b947e3eed5a20!8m2!3d43.0838377!4d-77.6805013!15sCh1DWUIgQnVpbGRpbmcgUklUIFJvY2hlc3RlciBOWVofIh1jeWIgYnVpbGRpbmcgcml0IHJvY2hlc3RlciBueZIBCnVuaXZlcnNpdHmaASRDaGREU1VoTk1HOW5TMFZKUTBGblNVTndYMlZYVTNaQlJSQULgAQD6AQQIYRBF!16s%2Fg%2F11pc76sjk7!5m1!1e4?hl=en-US&entry=ttu&g_ep=EgoyMDI2MDQxOS4wIKXMDSoASAFQAw%3D%3D
-
 const EventMap = ({ query }: { query: string }) => (
   <div
     className="rad-20 overflow-hidden bg-secondary"
