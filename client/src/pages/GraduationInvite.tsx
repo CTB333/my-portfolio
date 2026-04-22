@@ -14,13 +14,13 @@ const EVENTS: Event[] = [
   {
     time: "9:00 AM - 11:00 AM",
     title: "Reception",
-    location: "CYB - Room 1710/20/30",
-    googleMapQuery: "CYB Building RIT Rochester NY",
+    location: "Global Cybersecurity Building - Room 1710/20/30",
+    googleMapQuery: "ESL Global Cybersecurity Institute RIT Rochester NY",
   },
   {
     time: "10:00 AM - 11:00 AM",
     title: "Order of the Engineer Ceremony",
-    location: "GCCIS - Room 1400",
+    location: "GCCIS Building - Room 1400",
     googleMapQuery: "GCCIS Building RIT Rochester NY",
   },
   {
@@ -30,6 +30,8 @@ const EVENTS: Event[] = [
     googleMapQuery: "Gordon Field House RIT Rochester NY",
   },
 ];
+
+// https://www.google.com/maps/place/ESL+Global+Cybersecurity+Institute/@43.0838377,-77.6846771,17z/data=!4m10!1m2!2m1!1sCYB+Building+RIT+Rochester+NY!3m6!1s0x89d14d2c49d8c867:0x334b947e3eed5a20!8m2!3d43.0838377!4d-77.6805013!15sCh1DWUIgQnVpbGRpbmcgUklUIFJvY2hlc3RlciBOWVofIh1jeWIgYnVpbGRpbmcgcml0IHJvY2hlc3RlciBueZIBCnVuaXZlcnNpdHmaASRDaGREU1VoTk1HOW5TMFZKUTBGblNVTndYMlZYVTNaQlJSQULgAQD6AQQIYRBF!16s%2Fg%2F11pc76sjk7!5m1!1e4?hl=en-US&entry=ttu&g_ep=EgoyMDI2MDQxOS4wIKXMDSoASAFQAw%3D%3D
 
 const EventMap = ({ query }: { query: string }) => (
   <div
@@ -105,10 +107,23 @@ export const GraduationInvite = () => {
               <p className="fs-2 bold mb-15 color-accent text-center">
                 Event Details
               </p>
+              <hr />
               <p className="mb-10">
                 <b>Date</b>: Saturday, May 9, 2026
               </p>
-              <p className="mb-10">Multiple events throughout the day</p>
+              <p className="mb-10">
+                <b>Price: Free</b>
+              </p>
+              <p className="mb-10">
+                <b>Guest Limit</b>: None
+              </p>
+              <p className="mb-10">
+                <b>Seating</b>: 1st come, 1st serve.
+              </p>
+
+              <hr />
+
+              <p>Multiple events throughout the day</p>
               <p className="mb-10">
                 At various locations across <b>RIT campus</b> in Rochester, NY
               </p>
@@ -120,6 +135,9 @@ export const GraduationInvite = () => {
               className={`rad-20 bg-primary p-${ltSmall ? "20" : "40"} color-secondary`}
             >
               <p className="fs-2 bold mb-15 color-accent text-center">RSVP</p>
+
+              <hr />
+
               <p className="mb-10">
                 Please let us know if you will attend. We look forward to
                 celebrating together.
@@ -127,6 +145,9 @@ export const GraduationInvite = () => {
               <p className="mb-20">
                 Bring your best memories, family, and friends.
               </p>
+
+              <hr />
+
               <TextButton
                 onPress={() => navigate("/graduation/rsvp")}
                 buttonColor="#944bbb"
@@ -137,12 +158,13 @@ export const GraduationInvite = () => {
           </div>
         </div>
 
-        <EventMap query="1 Lomb Memorial Dr Rochester NY 14586" />
+        <EventMap query="ESL Global Cybersecurity Institute RIT Rochester NY" />
       </div>
 
       <div className={`rad-25 bg-primary p-${ltSmall ? "30" : "50"}`}>
         <div className={`mb-${ltSmall ? "30" : "50"} text-center`}>
           <p className="fs-2 bold color-secondary">Event Schedule</p>
+          <hr />
         </div>
 
         {EVENTS.map((event, index) => (

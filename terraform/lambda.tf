@@ -2,10 +2,7 @@
 
 # # Setup Lamda Source File
 
-locals {
-  lambda_md5 = filemd5("${path.module}/lambda/graduation-rsvp/index.ts")
-  date       = formatdate("YYYY-MM-DD-HH-mm", timestamp())
-}
+
 
 resource "terraform_data" "bootstrap" {
   triggers_replace = [
@@ -62,7 +59,7 @@ resource "aws_iam_role_policy_attachment" "logging_policy" {
 # Uncomment if unkown errors start to reoccur from backend
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name              = "/aws/lambda/TondreauTechGraduationRsvp-${local.date}"
+  name              = "/aws/lambda/TondreauTechGraduationRsvp-${local.date}T${local.time}"
   retention_in_days = 1
 }
 
@@ -71,7 +68,7 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
 resource "aws_lambda_function" "proxy_handler" {
   role = aws_iam_role.lambda_role.arn
 
-  function_name    = "TondreauTechGraduationRsvp-${local.date}"
+  function_name    = "TondreauTechGraduationRsvp-${local.date}T${local.time}"
   filename         = data.archive_file.lambda_zip_file.output_path
   handler          = "index.handler"
   runtime          = "nodejs18.x"
