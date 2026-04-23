@@ -45,7 +45,10 @@ export const RSVP = () => {
   useTimeoutEffect(
     () => {
       const num = parseInt(numBringing);
-      if (isNaN(num) || num < 1) {
+
+      if (isNaN(num)) return;
+
+      if (num < 1) {
         setNumBringing("1");
         setGuestList([""]);
         setShowGuestList(false);
@@ -58,7 +61,7 @@ export const RSVP = () => {
       }
     },
     [numBringing],
-    150,
+    250,
   );
 
   const validate = () => {
